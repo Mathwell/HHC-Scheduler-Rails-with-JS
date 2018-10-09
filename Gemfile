@@ -38,6 +38,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'dotenv-rails'
+gem 'jquery-rails'
 
 
 # Use Capistrano for deployment
