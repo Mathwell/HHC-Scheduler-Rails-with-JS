@@ -6,8 +6,8 @@ class NursesController < ApplicationController
   end
 
   def body
-    nurse = Nurse.find(params[:id])
-    render plain: nurse.patients
+    @nurse = Nurse.find(params[:id])
+    render json: @nurse
   end
 
   def filter_nurses
