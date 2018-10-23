@@ -5,6 +5,11 @@ class NursesController < ApplicationController
     @nurse = Nurse.new
   end
 
+  def body
+    nurse = Nurse.find(params[:id])
+    render plain: nurse.patients
+  end
+
   def filter_nurses
     #raise params.inspect
     if params[:nurse][:visits]!=""

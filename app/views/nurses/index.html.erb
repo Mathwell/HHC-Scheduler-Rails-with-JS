@@ -20,6 +20,7 @@
       <td><strong>Visits</strong></td>
       <td><strong>Edit</strong></td>
       <td><strong>Delete</strong></td>
+      <td><strong> More</td>
     </tr>
     <% @nurses.each do |nurse| %>
       <tr>
@@ -37,8 +38,10 @@
         <% if current_user.admin %>
           <td><%= link_to "Delete #{nurse.name}", nurse, :method => :delete, data: {:confirm => "Delete #{nurse.name}?" } , :title => "Delete #{nurse.first_name}" %></td>
           <% else %>
-          <td>Delete</td>
+          <td>Delete</td>         
         <% end %>
+        <td> <button class="js-more" data-id="<%= nurse.id %>">More...</button> </td>
+        <div id="body-<%= nurse.id %>"><%= truncate nurse.role %></div>
       </tr>
     <% end %>
   </tbody>
@@ -53,3 +56,17 @@
   <p><%= link_to 'New Nurse', new_nurse_path %></p>
   <p><%= link_to 'Most Loaded Nurses', 'nurses/most_loaded' %></p>
 <% end %>
+
+
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+  $(".js-more").on('click', function() {
+    // get the id from the data attribute
+    var id = $(this).data("id");
+    $.get("/nurses/" + id + "/body", function(data) {
+      $("#body-" + id).text(data);
+    });
+  });
+});
+</script>

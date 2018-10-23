@@ -1,6 +1,11 @@
 class PatientsController < ApplicationController
     before_action :set_patient, only: [:show, :edit, :update, :destroy]
 
+  def body
+    nurse = Nurse.find(params[:id])
+    render plain: nurse.last_name
+  end
+
   def choose_nurse
     #raise params.inspect
     if !params[:nurse][:id].blank?
