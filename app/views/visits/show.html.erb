@@ -12,10 +12,33 @@
     <p><strong>Date:</strong> <%= @visit.date %></p>
 
     <% if current_user.admin %>
-      <%= link_to 'Edit Visit', [:edit, @visit] %></p>
+      <p> <%= link_to 'Edit Visit', [:edit, @visit] %> </p>
+      <a href="#" class="js-next" data-id="<%= @visit.id %>">Next...</a>
+      <br>
     <% else %>
 
     <% end %>
     <%= link_to 'Back', visits_path,class: "btn btn-primary btn-light" %></p>
   </div>
 </div>
+
+<div class="nurseName"> <%= @visit.nurse.last_name+ " " + @visit.nurse.first_name%></div>
+<a href="#" class="js-next" data-id="<%= @visit.id %>">Next...</a>
+
+<h1 class="visitDate"> <%= @visit.date %></h1>
+<p class="visitPatient"> <%= @visit.patient.last_name%> </p>
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+  $(".js-next").on("click", function() {
+    var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+    $.get("/visits/" + nextId + ".json", function(data) {
+      $(".nurseName").text(data["nurse"]["last_name"]);
+      $(".visitDate").text(data["date"]);
+      $(".visitPatient").text(data["patient"]["last_name"]);
+      // re-set the id to current on the link
+      $(".js-next").attr("data-id", data["id"]);
+    });
+  });
+});
+</script>

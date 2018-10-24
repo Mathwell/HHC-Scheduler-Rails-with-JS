@@ -90,9 +90,15 @@ class VisitsController < ApplicationController
         @visits=Visit.all
       end
     end
+    @visit=@visits.first
   end
 
   def show
+    @visit=Visit.find(params[:id])
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @visit}
+    end   
 
   end
 
