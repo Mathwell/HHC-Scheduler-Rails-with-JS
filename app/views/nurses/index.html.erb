@@ -57,6 +57,10 @@
   <p><%= link_to 'Most Loaded Nurses', 'nurses/most_loaded' %></p>
 <% end %>
 
+<h1>Details</h1>
+<div class="nurseName"></div>
+
+
 
 
 <script type="text/javascript" charset="utf-8">
@@ -65,7 +69,8 @@ $(function () {
     // get the id from the data attribute
     var id = $(this).data("id");
     $.get("/nurses/" + id + "/body", function(data) {
-      $("#body-" + id).text(data);
+      $("#body-" + id).text(data["last_name"]);
+      $(".nurseName").text(data["last_name"]+" "+data["first_name"]);      
     });
   });
 });
