@@ -1,3 +1,3 @@
 class NurseSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :last_name, :first_name, :role
 end
