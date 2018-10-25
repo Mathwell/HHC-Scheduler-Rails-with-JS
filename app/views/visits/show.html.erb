@@ -6,10 +6,10 @@
 <div class="center">
 
   <div class="info">
-    <p><strong>Patient:</strong> <%= @visit.patient.name %> </p>
+    <p><strong>Patient:</strong> <div class="visitDate"><%= @visit.patient.name %> </div> </p>
 
-    <p><strong>Nurse:</strong> <%= @visit.nurse.name %></p>
-    <p><strong>Date:</strong> <%= @visit.date %></p>
+    <p><strong>Nurse:</strong> <div class="nurseName"> <%= @visit.nurse.name %> </div></p>
+    <p><strong>Date:</strong> <div class="visitDate">  <%= @visit.date %> </div></p>
 
     <% if current_user.admin %>
       <p> <%= link_to 'Edit Visit', [:edit, @visit] %> </p>
@@ -33,9 +33,9 @@ $(function () {
   $(".js-next").on("click", function() {
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/visits/" + nextId + ".json", function(data) {
-      $(".nurseName").text(data["nurse"]["last_name"]);
+      $(".nurseName").text(data["nurse"]["name"]);
       $(".visitDate").text(data["date"]);
-      $(".visitPatient").text(data["patient"]["last_name"]);
+      $(".visitPatient").text(data["patient"]["name"]);
       // re-set the id to current on the link
       $(".js-next").attr("data-id", data["id"]);
     });
