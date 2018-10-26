@@ -1,2 +1,45 @@
 <h1>Visits#update</h1>
 <p>Find me in app/views/visits/update.html.erb</p>
+
+<div class="nurseName"></div>
+<div class="id"> <%= @visit.id%></div>
+<a href="#" class="js-next" data-id="<%= @visit.id %>">Next...</a>
+<a href="#1" class="js-back" dataid="<%= @visit.id %>">Back...</a>
+<h1 class="visitDate"><%= @visit.date %></h1>
+<p class="visitPatient"><%= @visit.patient.name %></p>
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+  $(".js-next").on("click", function(event) {
+      event.preventDefault();
+    var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+    var currentId=$(".js-next").attr("data-id")
+    $.get("/visits/" + nextId + ".json", function(data) {
+      $(".nurseName").text(data["nurse"]["last_name"]);
+      $(".visitDate").text(data["date"]);
+      $(".visitPatient").text(data["patient"]["last_name"]);
+      // re-set the id to current on the link
+      $(".id").text(data["id"]);
+      $(".js-back").attr("dataid", $(".js-next").attr("data-id"));
+      $(".js-next").attr("data-id", data["id"]);
+    });
+  });
+});
+
+$(function () {
+  $(".js-back").on("click", function(event) {
+      event.preventDefault();
+    var backId = parseInt($(".js-next").attr("data-id"))-1;
+    var currentId=$(".js-next").attr("data-id")
+    $.get("/visits/" + backId + ".json", function(data) {
+      $(".nurseName").text(data["nurse"]["last_name"]);
+      $(".visitDate").text(data["date"]);
+      $(".visitPatient").text(data["patient"]["last_name"]);
+      // re-set the id to current on the link
+      $(".id").text(data["id"]);
+      $(".js-back").attr("dataid", backId);
+      $(".js-next").attr("data-id", data["id"]);
+    });
+  });
+});
+</script>

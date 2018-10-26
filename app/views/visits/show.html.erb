@@ -6,13 +6,14 @@
 <div class="center">
 
   <div class="info">
-    <p><strong>Patient:</strong> <div class="visitDate"><%= @visit.patient.name %> </div> </p>
+    <p><strong>Patient:</strong> <div class="visitPatient"><%= @visit.patient.name %> </div> </p>
 
     <p><strong>Nurse:</strong> <div class="nurseName"> <%= @visit.nurse.name %> </div></p>
     <p><strong>Date:</strong> <div class="visitDate">  <%= @visit.date %> </div></p>
 
     <% if current_user.admin %>
       <p> <%= link_to 'Edit Visit', [:edit, @visit] %> </p>
+      <a href="#1" class="js-back" dataid="<%= @visit.id %>">Back...</a>
       <a href="#" class="js-next" data-id="<%= @visit.id %>">Next...</a>
       <br>
     <% else %>
@@ -22,23 +23,37 @@
   </div>
 </div>
 
-<div class="nurseName"> <%= @visit.nurse.last_name+ " " + @visit.nurse.first_name%></div>
-<a href="#" class="js-next" data-id="<%= @visit.id %>">Next...</a>
-
-<h1 class="visitDate"> <%= @visit.date %></h1>
-<p class="visitPatient"> <%= @visit.patient.last_name%> </p>
 
 <script type="text/javascript" charset="utf-8">
 $(function () {
-  $(".js-next").on("click", function() {
+  $(".js-next").on("click", function(event) {
+    event.preventDefault();
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/visits/" + nextId + ".json", function(data) {
-      $(".nurseName").text(data["nurse"]["name"]);
+      $(".nurseName").text(data["nurse"]["last_name"]);
       $(".visitDate").text(data["date"]);
-      $(".visitPatient").text(data["patient"]["name"]);
+      $(".visitPatient").text(data["patient"]["last_name"]);
       // re-set the id to current on the link
       $(".js-next").attr("data-id", data["id"]);
     });
   });
 });
+
+$(function () {
+  $(".js-back").on("click", function(event) {
+      event.preventDefault();
+    var backId = parseInt($(".js-next").attr("data-id"))-1;
+    var currentId=$(".js-next").attr("data-id")
+    $.get("/visits/" + backId + ".json", function(data) {
+      $(".nurseName").text(data["nurse"]["last_name"]);
+      $(".visitDate").text(data["date"]);
+      $(".visitPatient").text(data["patient"]["last_name"]);
+      // re-set the id to current on the link
+      $(".id").text(data["id"]);
+      $(".js-back").attr("dataid", backId);
+      $(".js-next").attr("data-id", data["id"]);
+    });
+  });
+});
+
 </script>
