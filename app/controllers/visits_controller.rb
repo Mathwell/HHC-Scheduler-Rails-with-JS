@@ -91,6 +91,11 @@ class VisitsController < ApplicationController
       end
     end
     @visit=@visits.first
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @visit}
+    end   
+
   end
 
   def show

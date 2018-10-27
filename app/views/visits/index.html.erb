@@ -73,12 +73,13 @@
 <% end %>
 
 
-
-<div class="nurseName"> <%= @visit.nurse.last_name+ " " + @visit.nurse.first_name%></div>
+<!--
+<div class="nurseName"> <%= @visits.first.nurse.last_name+ " " + @visits.first.nurse.first_name%></div>
 <a href="#" class="js-next" data-id="<%=@visit.id%>">Next...</a>
 
-<h1 class="visitDate"><%= @visit.date %></h1>
-<p class="visitPatient"><%= @visit.patient.last_name%></p>
+<h1 class="visitDate"><%= @visits.first.date %></h1>
+<p class="visitPatient"><%= @visits.first.patient.last_name%></p>
+-->
 
 <script type="text/javascript" charset="utf-8">
 $(function () {
