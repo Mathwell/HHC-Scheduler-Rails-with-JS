@@ -28,6 +28,7 @@
 $(function () {
   $(".js-next").on("click", function(event) {
     event.preventDefault();
+    alert("Clicked!")
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/visits/" + nextId + ".json", function(data) {
       $(".nurseName").text(data["nurse"]["last_name"]+ " "+data["nurse"]["first_name"]);

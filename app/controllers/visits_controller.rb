@@ -35,10 +35,7 @@ class VisitsController < ApplicationController
     if !@visit=Visit.find_by(nurse_id: params[:visit][:nurse_id], patient_id: params[:visit][:patient_id], date: params[:visit][:date])
       @visit = Visit.new(visit_params)
     end
-    #@nurse.patients<<@patient
-    #@nurse.patients<<@patient
-    #raise @nurse.inspect
-    #binding.pry
+    
     respond_to do |format|
       if @visit.save
         @nurse=Nurse.find(@visit.nurse_id)
@@ -94,7 +91,7 @@ class VisitsController < ApplicationController
     @visit=@visits.first
     respond_to do |format|
       format.html { render :index }
-      format.json { render json: @visit}
+      format.json { render json: @visits}      
     end   
 
   end

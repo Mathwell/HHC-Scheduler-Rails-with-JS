@@ -17,3 +17,28 @@
     <%= link_to 'Back', nurses_path,class: "btn btn-primary btn-light" %></p>
   </div>
 </div>
+
+<h1><%=@nurse.name%>'s Visits</h1>
+<button class="js-more" data-id="<%= @nurse.id %>"> Show Visits...</button>
+<div class="visits"></div>
+
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+  
+  $(".js-more").on("click", function(event) {
+    event.preventDefault();
+    var id=$(".js-more").attr("data-id")
+    $.get("/nurses/"+id+"/visits.json", function(data) {
+      let visitList=""
+      data.forEach(function(visit){
+        visitList=+visit["date"]+" "+ visit["patient"]["last_name"];      
+        })
+        $(".visits").text(visit["date"]+" "+ visit["patient"]["last_name"];      
+    });
+   
+  });
+});
+
+</script>
+
