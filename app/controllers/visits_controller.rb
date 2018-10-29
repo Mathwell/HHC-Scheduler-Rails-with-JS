@@ -7,6 +7,7 @@ class VisitsController < ApplicationController
     if !params[:visit][:nurse_id].blank?
        @nurse=Nurse.find(params[:visit][:nurse_id])
        respond_to do |format|
+          format.json { render json: @visit}
           format.html { redirect_to nurse_visits_path(@nurse.id) }
        end
      else
