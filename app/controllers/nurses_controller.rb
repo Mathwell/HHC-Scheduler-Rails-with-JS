@@ -74,6 +74,10 @@ class NursesController < ApplicationController
   def show
     @visits = @nurse.visits
     #render json: @nurse.to_json
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @nurse}
+    end   
   end
 
   private

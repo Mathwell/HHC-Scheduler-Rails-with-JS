@@ -4,13 +4,16 @@
 <div class="center">
 
   <div class="info">
-    <p><strong>Name:</strong> <%= @nurse.first_name+" "+@nurse.last_name %> </p>
+    <p><strong>Name:</strong> <div class="nurseName"> <%= @nurse.name %> </div> </p>
 
-    <p><strong>Total Number of Visits:</strong> <%= @nurse.visits.count %></p>
-    <p><strong>Total Number of Patients:</strong> <%= @nurse.patients.count %></p>
+    <p><strong >Total Number of Visits:</strong> <div class="nurseVisits"> <%= @nurse.visits.count %> </div></p>
+    <p><strong >Total Number of Patients:</strong> <div class="nursePatients"><%= @nurse.patients.count %> </div></p>
     <p><strong>Role:</strong> <%= @nurse.role %></p>
     <% if current_user.admin %>
       <%= link_to 'Edit Nurse', [:edit, @nurse] %></p>
+      <a href="#1" class="js-back" dataid="<%= @nurse.id %>">Back...</a>
+      <a href="#" class="js-next" data-id="<%= @nurse.id %>">Next...</a>
+      <br>
     <% else %>
 
     <% end %>
@@ -30,13 +33,45 @@ $(function () {
     event.preventDefault();
     var id=$(".js-more").attr("data-id")
     $.get("/nurses/"+id+"/visits.json", function(data) {
-      let visitList=""
+      let visitList="";
+      
       data.forEach(function(visit){
-        visitList=+visit["date"]+" "+ visit["patient"]["last_name"];      
-        })
-        $(".visits").text(visit["date"]+" "+ visit["patient"]["last_name"];      
+           visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"<br /> ";      
+      });
+
+      $(".visits").html(visitList);      
     });
    
+  });
+});
+      
+
+$(function () {
+  $(".js-next").on("click", function(event) {
+    event.preventDefault();    
+    var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+    $.get("/nurses/" + nextId + ".json", function(data) {
+      $(".nurseName").text(data["last_name"]+ " "+data["first_name"]);
+      $(".js-next").attr("data-id", data["id"]);
+      
+    });
+  });
+});
+
+$(function () {
+  $(".js-back").on("click", function(event) {
+      event.preventDefault();
+    var backId = parseInt($(".js-next").attr("data-id"))-1;
+    var currentId=$(".js-next").attr("data-id")
+    $.get("/visits/" + backId + ".json", function(data) {
+      $(".nurseName").text(data["nurse"]["last_name"]+ " "+data["nurse"]["first_name"]);
+      $(".visitDate").text(data["date"]);
+      $(".visitPatient").text(data["patient"]["last_name"]+ " "+data["patient"]["first_name"]);
+      // re-set the id to current on the link
+      $(".id").text(data["id"]);
+      $(".js-back").attr("dataid", backId);
+      $(".js-next").attr("data-id", data["id"]);
+    });
   });
 });
 
