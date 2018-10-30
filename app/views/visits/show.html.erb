@@ -13,8 +13,8 @@
 
     <% if current_user.admin %>
       <p> <%= link_to 'Edit Visit', [:edit, @visit] %> </p>
-      <a href="#1" class="js-back" dataid="<%= @visit.id %>">Back...</a>
-      <a href="#" class="js-next" data-id="<%= @visit.id %>">Next...</a>
+      <a href="#1" class="js-back-visit" dataid="<%= @visit.id %>">Back...</a>
+      <a href="#" class="js-next-visit" data-id="<%= @visit.id %>">Next...</a>
       <br>
     <% else %>
 
@@ -24,36 +24,3 @@
 </div>
 
 
-<script type="text/javascript" charset="utf-8">
-$(function () {
-  $(".js-next").on("click", function(event) {
-    event.preventDefault();    
-    var nextId = parseInt($(".js-next").attr("data-id")) + 1;
-    $.get("/visits/" + nextId + ".json", function(data) {
-      $(".nurseName").text(data["nurse"]["last_name"]+ " "+data["nurse"]["first_name"]);
-      $(".visitDate").text(data["date"]);
-      $(".visitPatient").text(data["patient"]["last_name"]+" "+data["patient"]["first_name"]);
-      // re-set the id to current on the link
-      $(".js-next").attr("data-id", data["id"]);
-    });
-  });
-});
-
-$(function () {
-  $(".js-back").on("click", function(event) {
-      event.preventDefault();
-    var backId = parseInt($(".js-next").attr("data-id"))-1;
-    var currentId=$(".js-next").attr("data-id")
-    $.get("/visits/" + backId + ".json", function(data) {
-      $(".nurseName").text(data["nurse"]["last_name"]+ " "+data["nurse"]["first_name"]);
-      $(".visitDate").text(data["date"]);
-      $(".visitPatient").text(data["patient"]["last_name"]+ " "+data["patient"]["first_name"]);
-      // re-set the id to current on the link
-      $(".id").text(data["id"]);
-      $(".js-back").attr("dataid", backId);
-      $(".js-next").attr("data-id", data["id"]);
-    });
-  });
-});
-
-</script>

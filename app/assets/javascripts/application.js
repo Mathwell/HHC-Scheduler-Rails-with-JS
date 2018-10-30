@@ -14,4 +14,5 @@
 //= require jquery
 //= require hide
 //= require nurses_js
+//= require visits_js
 //= require_tree 

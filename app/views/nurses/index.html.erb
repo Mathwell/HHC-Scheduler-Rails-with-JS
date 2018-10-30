@@ -21,6 +21,8 @@
       <td><strong>Edit</strong></td>
       <td><strong>Delete</strong></td>
       <td><strong> More</td>
+      <td><strong> Show Visits</td>
+      <td><strong> Show Patients</td>
     </tr>
     <% @nurses.each do |nurse| %>
       <tr>
@@ -41,6 +43,7 @@
           <td>Delete</td>         
         <% end %>
         <td> <%= link_to 'More', nurse,class: "btn btn-primary btn-light" %></p> </td>
+        <td> <button class="nurses_visit" id="<%=nurse.id%>">Show Visits</button></td>
         <div id="body-<%= nurse.id %>"><%= truncate nurse.role %></div>
       </tr>
     <% end %>
@@ -60,19 +63,5 @@
 <h1>Details</h1>
 <div class="nurseName"></div>
 <a href="#" class="error" id="more">Click To Hide Me</a>
+<div class="visits"></div>
 
-
-
-
-<script type="text/javascript" charset="utf-8">
-$(function () {
-  $(".js-more").on('click', function() {
-    // get the id from the data attribute
-    var id = $(this).data("id");
-    $.get("/nurses/" + id + "/body", function(data) {
-      $("#body-" + id).text(data["last_name"]);
-      $(".nurseName").text(data["last_name"]+" "+data["first_name"]);      
-    });
-  });
-});
-</script>

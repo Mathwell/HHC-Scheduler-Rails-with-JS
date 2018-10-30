@@ -39,12 +39,30 @@ $(document).ready(function () {
 });
 
 
- function moreInfo(event){
-    event.preventDefault()
-    $(event.target).hide()
-  }
-  $('.btn').disable
-  $('.btn').click(moreInfo)
+$(document).ready(function () {
+  $(".nurses_visit").on("click", function(event) {
+  event.preventDefault();
+  //alert(event.target.id)
+  var dataId=event.target.id
+  $.get("/nurses/"+dataId+"/visits.json", function(data) {
+    let visitList="";
+    data.forEach(function(visit){
+       visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"<br /> ";      
+    });
+    $(".visits").html(visitList);      
+  });
+ });
+});
+
+
+
+
+// function moreInfo(event){
+//    event.preventDefault()
+//    $(event.target).hide()
+//  }
+//  $('.btn').disable
+//  $('.btn').click(moreInfo)
   
 
   
