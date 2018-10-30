@@ -40,7 +40,7 @@
           <% else %>
           <td>Delete</td>         
         <% end %>
-        <td> <button class="js-more" data-id="<%= nurse.id %>">More...</button> </td>
+        <td> <%= link_to 'More', nurse,class: "btn btn-primary btn-light" %></p> </td>
         <div id="body-<%= nurse.id %>"><%= truncate nurse.role %></div>
       </tr>
     <% end %>
@@ -59,6 +59,7 @@
 
 <h1>Details</h1>
 <div class="nurseName"></div>
+<a href="#" class="error" id="more">Click To Hide Me</a>
 
 
 

@@ -40,7 +40,7 @@
 
         <td><%= visit.patient.name %></td>
         <td><%= visit.nurse.name %></td>
-        <td><%= visit.date %></td>
+        <td> <%= link_to "#{visit.date}", visit %></td>
         <% if current_user.admin %>
           <td><%= link_to "Edit #{visit.nurse.name}'s visit to #{visit.patient.name}", [:edit, visit] %></td>
         <% else %>

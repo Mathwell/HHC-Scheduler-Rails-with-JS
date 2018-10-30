@@ -12,6 +12,7 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
 //= require jquery
 //= require hide
+//= require nurses_js
+//= require_tree 
