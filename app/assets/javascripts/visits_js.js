@@ -30,3 +30,15 @@ $(document).ready(function () {
   });
 });
 
+//class Visit_1{
+//    constructor(attr){
+//        this.patient=attr.patient
+//        this.nurse=attr.nurse
+//        this.date=attr.date
+//    }
+//}
+
+//Visit_1.prototype.renderHTML=function(){
+  //  return '<div>${this.date}+" "+${this.nurse.name}+" "+${this.patient}</div>'
+//}
+

@@ -33,7 +33,8 @@ $(document).ready(function () {
       data.forEach(function(visit){
          visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"<br /> ";      
       });
-      $(".visits").html(visitList);      
+      $(".visits").html(visitList); 
+      $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId}>Add New Visit  </p>` );    
     });
    });
 });
@@ -47,12 +48,52 @@ $(document).ready(function () {
   $.get("/nurses/"+dataId+"/visits.json", function(data) {
     let visitList="";
     data.forEach(function(visit){
-       visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"<br /> ";      
+       visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"  <a href=`#`>Edit</a><br /> ";      
     });
-    $(".visits").html(visitList);      
+    $(".visits").html(visitList); 
+    $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="addVisit(this)">Add New Visit </a>` );
+     
   });
  });
 });
+
+function addVisit(id) { 
+  $form = $("<form></form>");
+  $form.append($("<input>", 
+  { type:'text', 
+    placeholder:'date', 
+    name:'date', 
+    value: 'enter date', 
+    })
+  );
+  $form.append($("<input>", 
+  { type:'collection', 
+    placeholder:'patient', 
+    elements: ["a", "b", "c"],
+    name:'patient', 
+    value: 'patient', 
+    })
+  );
+  $form.append( 
+    $("<input>", 
+         { type:'submit', 
+           value:'Add Visit',            
+           onClick: "postVisit(this)"
+           }
+      )
+);
+
+  //$form.append(`<input type="button" onClick="postVisit(this)" value="add visit">`);
+  $('.visits').append($form);
+  id.innerHTML = "Adding..."
+  id.disable;
+}
+
+function postVisit(event){
+  event.preventDefault
+  alert("Posting!")
+}
+
 
 
 
