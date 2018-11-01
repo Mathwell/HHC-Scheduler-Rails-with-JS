@@ -51,7 +51,7 @@ $(document).ready(function () {
        visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"  <a href=`#`>Edit</a><br /> ";      
     });
     $(".visits").html(visitList); 
-    //$( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="addVisit(this)">Add New Visit </a>` );
+    $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(this)">Add New Visit </a>` );
      
   });
  });
@@ -78,8 +78,7 @@ function addVisit(id) {
   $form.append( 
     $("<input>", 
          { type:'submit', 
-           value:'Add Visit',
-           onClick: addVisit(this)                       
+           value:'Add Visit',                                         
            }
       )
 );

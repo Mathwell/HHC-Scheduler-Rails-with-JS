@@ -34,26 +34,12 @@ $(function () {
     $('.new_visit').submit(function(event) {
       //prevent form from submitting the default way
       event.preventDefault();
- 
       var values = $(this).serialize();
- 
+      alert(values)
       var posting = $.post('/visits', values);
- 
       posting.done(function(data) {
-          alert("done!")
+        window.location="/visits";
       });
     });
   });
-
-//class Visit_1{
-//    constructor(attr){
-//        this.patient=attr.patient
-//        this.nurse=attr.nurse
-//        this.date=attr.date
-//    }
-//}
-
-//Visit_1.prototype.renderHTML=function(){
-  //  return '<div>${this.date}+" "+${this.nurse.name}+" "+${this.patient}</div>'
-//}
 
