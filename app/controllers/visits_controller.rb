@@ -32,6 +32,7 @@ class VisitsController < ApplicationController
   end
 
   def create
+    
     if !@visit=Visit.find_by(nurse_id: params[:visit][:nurse_id], patient_id: params[:visit][:patient_id], date: params[:visit][:date])
       @visit = Visit.new(visit_params)
     end

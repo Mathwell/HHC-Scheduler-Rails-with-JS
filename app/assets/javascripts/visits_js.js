@@ -30,6 +30,21 @@ $(document).ready(function () {
   });
 });
 
+$(function () {
+    $('.new_visit').submit(function(event) {
+      //prevent form from submitting the default way
+      event.preventDefault();
+ 
+      var values = $(this).serialize();
+ 
+      var posting = $.post('/visits', values);
+ 
+      posting.done(function(data) {
+          alert("done!")
+      });
+    });
+  });
+
 //class Visit_1{
 //    constructor(attr){
 //        this.patient=attr.patient

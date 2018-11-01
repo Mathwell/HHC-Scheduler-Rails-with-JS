@@ -34,7 +34,7 @@ $(document).ready(function () {
          visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"<br /> ";      
       });
       $(".visits").html(visitList); 
-      $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId}>Add New Visit  </p>` );    
+      //$( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="">Add New Visit  </p>` );    
     });
    });
 });
@@ -51,22 +51,22 @@ $(document).ready(function () {
        visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"  <a href=`#`>Edit</a><br /> ";      
     });
     $(".visits").html(visitList); 
-    $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="addVisit(this)">Add New Visit </a>` );
+    //$( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="addVisit(this)">Add New Visit </a>` );
      
   });
  });
 });
 
-function addVisit(id) { 
-  $form = $("<form></form>");
+function addVisit(id) {     
+  $form = $(`<form></form>`);
   $form.append($("<input>", 
   { type:'text', 
-    placeholder:'date', 
+    placeholder:':visit.date', 
     name:'date', 
     value: 'enter date', 
     })
   );
-  $select=$("<select name='patient' placeholder='patient'></select>");
+  $select=$("<select name=':visit.patient_id' placeholder='patient'></select>");
   $.get("/patients.json", function(data){
     data.forEach(function(patient){
       $select.append(`<option value=${patient.id}>${patient.last_name} ${patient.first_name}</option>`);
@@ -78,22 +78,32 @@ function addVisit(id) {
   $form.append( 
     $("<input>", 
          { type:'submit', 
-           value:'Add Visit',            
-           onClick: "postVisit(this)"
+           value:'Add Visit',
+           onClick: addVisit(this)                       
            }
       )
 );
 
   //$form.append(`<input type="button" onClick="postVisit(this)" value="add visit">`);
   $('.visits').append($form);
+  //$form.addEventListener("submit", postVisit)
   id.innerHTML = "Adding..."
   id.disable;
 }
 
-function postVisit(event){
-  event.preventDefault
-  alert("Posting!")
-}
+//function postVisit(event){
+   //event.preventDefault();
+  //    alert(this.data)
+      
+//}
+
+function postVisit(event) {
+    //prevent form from submitting the default way
+    //event.preventDefault();
+    const url = "/visits/new.html";
+    $( location ).attr("href", url);
+    
+  };
 
 
 
