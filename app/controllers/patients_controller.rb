@@ -91,6 +91,10 @@ class PatientsController < ApplicationController
     end
     #@nurses=Nurse.all
     #@patients=Patient.all
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @patients}      
+    end   
   end
 
   def show

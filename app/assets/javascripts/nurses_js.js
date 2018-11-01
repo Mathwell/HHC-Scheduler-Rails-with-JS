@@ -66,14 +66,15 @@ function addVisit(id) {
     value: 'enter date', 
     })
   );
-  $form.append($("<input>", 
-  { type:'collection', 
-    placeholder:'patient', 
-    elements: ["a", "b", "c"],
-    name:'patient', 
-    value: 'patient', 
+  $select=$("<select name='patient' placeholder='patient'></select>");
+  $.get("/patients.json", function(data){
+    data.forEach(function(patient){
+      $select.append(`<option value=${patient.id}>${patient.last_name} ${patient.first_name}</option>`);
     })
-  );
+  })
+   
+  $form.append($($select));
+ 
   $form.append( 
     $("<input>", 
          { type:'submit', 
