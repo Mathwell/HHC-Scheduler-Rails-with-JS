@@ -73,14 +73,6 @@
 <% end %>
 
 
-<!--
-<div class="nurseName"> <%= @visits.first.nurse.last_name+ " " + @visits.first.nurse.first_name%></div>
-<a href="#" class="js-next" data-id="<%=@visit.id%>">Next...</a>
-
-<h1 class="visitDate"><%= @visits.first.date %></h1>
-<p class="visitPatient"><%= @visits.first.patient.last_name%></p>
--->
-
 <script type="text/javascript" charset="utf-8">
 $(function () {
   $(".js-next").on("click", function() {
@@ -95,4 +87,3 @@ $(function () {
   });
 });
 </script>
-
