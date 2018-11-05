@@ -1,10 +1,36 @@
+//renders visit index page via JS and Active Model Serialization JSON backend
+$(document).ready(function () {
+  $(".nurses_visit").on("click", function(event) {
+    event.preventDefault();
+    var dataId=event.target.id
+    $.get("/nurses/"+dataId+"/visits.json", function(data) {
+      let visitList="";
+      data.forEach(function(visit){
+        visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"  <a href=`#`>Edit</a><br /> ";
+      });
+      $(".visits").html(visitList);
+      $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(${dataId})">Add New Visit </a>` );
+    });
+    $.get("/nurses/"+dataId+".json", function(data) {
+      $(".nurseName").html("<h3>"+data.first_name+" "+data.last_name+"'s Visits: </h3>")
+      });
+    });
+  });
+
+  function postVisit(id) {
+      const url = "nurses/"+id+"/visits/new.html";
+      $( location ).attr("href", url);
+    };
+
+
+
 $(document).ready(function(){
   $(".js-next").on("click", function(event) {
-    event.preventDefault();    
+    event.preventDefault();
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/nurses/" + nextId + ".json", function(data) {
       $(".nurseName").text(data["last_name"]+ " "+data["first_name"]);
-      $(".js-next").attr("data-id", data["id"]);      
+      $(".js-next").attr("data-id", data["id"]);
     });
   })
 })
@@ -15,7 +41,7 @@ $(document).ready(function () {
     var backId = parseInt($(".js-next").attr("data-id"))-1;
     var currentId=$(".js-next").attr("data-id")
     $.get("/visits/" + backId + ".json", function(data) {
-      $(".nurseName").text(data["nurse"]["last_name"]+ " "+data["nurse"]["first_name"]);      
+      $(".nurseName").text(data["nurse"]["last_name"]+ " "+data["nurse"]["first_name"]);
       // re-set the id to current on the link
       $(".id").text(data["id"]);
       $(".js-back").attr("dataid", backId);
@@ -31,39 +57,22 @@ $(document).ready(function () {
     $.get("/nurses/"+id+"/visits.json", function(data) {
       let visitList="";
       data.forEach(function(visit){
-         visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"<br /> ";      
+         visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"<br /> ";
       });
-      $(".visits").html(visitList); 
-      //$( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="">Add New Visit  </p>` );    
+      $(".visits").html(visitList);
+      //$( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="">Add New Visit  </p>` );
     });
    });
 });
 
 
-$(document).ready(function () {
-  $(".nurses_visit").on("click", function(event) {
-  event.preventDefault();
-  //alert(event.target.id)
-  var dataId=event.target.id
-  $.get("/nurses/"+dataId+"/visits.json", function(data) {
-    let visitList="";
-    data.forEach(function(visit){
-       visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"  <a href=`#`>Edit</a><br /> ";      
-    });
-    $(".visits").html(visitList); 
-    $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(this)">Add New Visit </a>` );
-     
-  });
- });
-});
-
-function addVisit(id) {     
+function addVisit(id) {
   $form = $(`<form></form>`);
-  $form.append($("<input>", 
-  { type:'text', 
-    placeholder:':visit.date', 
-    name:'date', 
-    value: 'enter date', 
+  $form.append($("<input>",
+  { type:'text',
+    placeholder:':visit.date',
+    name:'date',
+    value: 'enter date',
     })
   );
   $select=$("<select name=':visit.patient_id' placeholder='patient'></select>");
@@ -72,13 +81,13 @@ function addVisit(id) {
       $select.append(`<option value=${patient.id}>${patient.last_name} ${patient.first_name}</option>`);
     })
   })
-   
+
   $form.append($($select));
- 
-  $form.append( 
-    $("<input>", 
-         { type:'submit', 
-           value:'Add Visit',                                         
+
+  $form.append(
+    $("<input>",
+         { type:'submit',
+           value:'Add Visit',
            }
       )
 );
@@ -93,15 +102,15 @@ function addVisit(id) {
 //function postVisit(event){
    //event.preventDefault();
   //    alert(this.data)
-      
+
 //}
 
-function postVisit(event) {
+function postVisit(id) {
     //prevent form from submitting the default way
-    //event.preventDefault();
-    const url = "/visits/new.html";
+    //alert(event)
+    const url = "nurses/"+id+"/visits/new.html";
     $( location ).attr("href", url);
-    
+
   };
 
 
@@ -114,6 +123,3 @@ function postVisit(event) {
 //  }
 //  $('.btn').disable
 //  $('.btn').click(moreInfo)
-  
-
-  

@@ -40,11 +40,11 @@
         <% if current_user.admin %>
           <td><%= link_to "Delete #{nurse.name}", nurse, :method => :delete, data: {:confirm => "Delete #{nurse.name}?" } , :title => "Delete #{nurse.first_name}" %></td>
           <% else %>
-          <td>Delete</td>         
+          <td>Delete</td>
         <% end %>
         <td> <%= link_to 'More', nurse,class: "btn btn-primary btn-light" %></p> </td>
         <td> <button class="nurses_visit" id="<%=nurse.id%>">Show Visits</button></td>
-        <div id="body-<%= nurse.id %>"><%= truncate nurse.role %></div>
+        <td> <button class="nurses_visit" id="<%=nurse.id%>">Show Patients</button></td>
       </tr>
     <% end %>
   </tbody>
@@ -62,6 +62,4 @@
 
 <h1>Details</h1>
 <div class="nurseName"></div>
-<a href="#" class="error" id="more">Click To Hide Me</a>
 <div class="visits"></div>
-
