@@ -12,7 +12,7 @@ $(document).ready(function () {
       $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(${dataId})">Add New Visit </a>` );
     });
     $.get("/nurses/"+dataId+".json", function(data) {
-      $(".nurseName").html("<h3>"+data.first_name+" "+data.last_name+"'s Visits: </h3>")
+      $(".nurseNameVisits").html("<h3>"+data.first_name+" "+data.last_name+"'s Visits: </h3>")
       });
     });
   });
@@ -30,22 +30,30 @@ $(document).ready(function(){
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.get("/nurses/" + nextId + ".json", function(data) {
       $(".nurseName").text(data["last_name"]+ " "+data["first_name"]);
+      $(".nurseVisits").text(data["visits"].length);
+      $(".nursePatients").text(data["patients"].length);
+      $(".nurseNameVisits").html(data["first_name"]+" "+data["last_name"]+"'s Visits:")
+      $(".nurses_visit").attr("id",data["id"]);
+      $(".visits").text("");
       $(".js-next").attr("data-id", data["id"]);
+      $(".js-back").attr("data-id", data["id"]);
     });
   })
 })
 
 $(document).ready(function () {
   $(".js-back").on("click", function(event) {
-      event.preventDefault();
-    var backId = parseInt($(".js-next").attr("data-id"))-1;
-    var currentId=$(".js-next").attr("data-id")
-    $.get("/visits/" + backId + ".json", function(data) {
-      $(".nurseName").text(data["nurse"]["last_name"]+ " "+data["nurse"]["first_name"]);
-      // re-set the id to current on the link
-      $(".id").text(data["id"]);
-      $(".js-back").attr("dataid", backId);
+    event.preventDefault();
+    var backId = parseInt($(".js-back").attr("data-id"))-1;
+    $.get("/nurses/" + backId + ".json", function(data) {
+      $(".nurseName").text(data["last_name"]+ " "+data["first_name"]);
+      $(".nurseVisits").text(data["visits"].length);
+      $(".nursePatients").text(data["patients"].length);
+      $(".nurseNameVisits").html(data["first_name"]+" "+data["last_name"]+"'s Visits:")
+      $(".nurses_visit").attr("id",data["id"]);
+      $(".visits").text("");
       $(".js-next").attr("data-id", data["id"]);
+      $(".js-back").attr("data-id", data["id"]);
     });
   });
 });
