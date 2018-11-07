@@ -27,7 +27,7 @@
     <% @nurses.each do |nurse| %>
       <tr>
 
-        <td><%= nurse.first_name %></td>
+        <td><%= link_to "#{nurse.name}", nurse_path(nurse.id) %></td>
         <td><%= nurse.last_name %></td>
         <td><%= nurse.role %></td>
         <td><%= link_to "#{nurse.patients.count}", nurse_patients_path(nurse.id) %></td>

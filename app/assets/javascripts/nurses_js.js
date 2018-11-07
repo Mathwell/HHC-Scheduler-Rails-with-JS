@@ -6,7 +6,7 @@ $(document).ready(function () {
     $.get("/nurses/"+dataId+"/visits.json", function(data) {
       let visitList="";
       data.forEach(function(visit){
-        visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+"  <a href=`#`>Edit</a><br /> ";
+        visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+ visit["patient"]["first_name"]+"  <a href=`#`>Edit</a><br /> ";
       });
       $(".visits").html(visitList);
       $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(${dataId})">Add New Visit </a>` );
@@ -18,7 +18,7 @@ $(document).ready(function () {
   });
 
   function postVisit(id) {
-      const url = "nurses/"+id+"/visits/new.html";
+      const url = "/nurses/"+id+"/visits/new.html";
       $( location ).attr("href", url);
     };
 
@@ -112,14 +112,6 @@ function addVisit(id) {
   //    alert(this.data)
 
 //}
-
-function postVisit(id) {
-    //prevent form from submitting the default way
-    //alert(event)
-    const url = "nurses/"+id+"/visits/new.html";
-    $( location ).attr("href", url);
-
-  };
 
 
 

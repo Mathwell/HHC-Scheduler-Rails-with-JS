@@ -35,7 +35,7 @@ $(function () {
       //prevent form from submitting the default way
       event.preventDefault();
       var values = $(this).serialize();
-      alert(values)
+      //alert(values)
       var posting = $.post('/visits', values);
       posting.done(function(data) {
         window.location="/visits";
