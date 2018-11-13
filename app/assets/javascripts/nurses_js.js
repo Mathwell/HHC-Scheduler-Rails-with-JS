@@ -1,21 +1,33 @@
 //renders visit index page via JS and Active Model Serialization JSON backend
-$(document).ready(function () {
-  $(".nurses_visit").on("click", function(event) {
-    event.preventDefault();
-    var dataId=event.target.id
-    $.get("/nurses/"+dataId+"/visits.json", function(data) {
-      let visitList="";
-      data.forEach(function(visit){
-        visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+ visit["patient"]["first_name"]+"  <a href=`#`>Edit</a><br /> ";
-      });
-      $(".visits").html(visitList);
-      $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(${dataId})">Add New Visit </a>` );
+function addEventListeners(){
+   const visit_buttons=document.getElementsByClassName("nurses_visit")
+  Array.from(visit_buttons).forEach(function(element) {
+    element.addEventListener('click',function(event){showVisits(event)});
+  });  
+  //debugger
+}
+
+function showVisits(event){  
+  event.preventDefault();  
+  var dataId=event.target.id
+  fetch("/nurses/"+dataId+"/visits.json", {
+     body: JSON.stringify(data),
+     header: headers,
+     method: 'Get',
+  }).then(res => res.JSON())
+  .then(data=>{
+    let visitList="";
+    data.forEach(function(visit){
+      visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+ visit["patient"]["first_name"]+"  <a href=`#`>Edit</a><br /> ";
     });
-    $.get("/nurses/"+dataId+".json", function(data) {
-      $(".nurseNameVisits").html("<h3>"+data.first_name+" "+data.last_name+"'s Visits: </h3>")
-      });
-    });
+    $(".visits").html(visitList);
+    $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(${dataId})">Add New Visit </a>` );
   });
+  $.get("/nurses/"+dataId+".json", function(data) {
+    $(".nurseNameVisits").html("<h3>"+data.first_name+" "+data.last_name+"'s Visits: </h3>")
+    });
+}
+
 
   function postVisit(id) {
       const url = "/nurses/"+id+"/visits/new.html";
@@ -123,3 +135,4 @@ function addVisit(id) {
 //  }
 //  $('.btn').disable
 //  $('.btn').click(moreInfo)
+addEventListeners()
