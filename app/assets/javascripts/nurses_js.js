@@ -10,11 +10,9 @@ function addEventListeners(){
 function showVisits(event){  
   event.preventDefault();  
   var dataId=event.target.id
-  fetch("/nurses/"+dataId+"/visits.json", {
-     body: JSON.stringify(data),
-     header: headers,
-     method: 'Get',
-  }).then(res => res.JSON())
+  debugger
+  fetch("/nurses/"+dataId+"/visits.json")
+  .then(res => res.JSON())
   .then(data=>{
     let visitList="";
     data.forEach(function(visit){
@@ -23,6 +21,7 @@ function showVisits(event){
     $(".visits").html(visitList);
     $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(${dataId})">Add New Visit </a>` );
   });
+  debugger
   $.get("/nurses/"+dataId+".json", function(data) {
     $(".nurseNameVisits").html("<h3>"+data.first_name+" "+data.last_name+"'s Visits: </h3>")
     });
