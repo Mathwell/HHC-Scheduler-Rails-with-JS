@@ -10,20 +10,24 @@ function addEventListeners(){
 function showVisits(event){  
   event.preventDefault();  
   var dataId=event.target.id
-  debugger
-  fetch("/nurses/"+dataId+"/visits.json")
-  .then(res => res.JSON())
+  fetch("/nurses/"+dataId+"/visits.json",{
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  })
+  .then((resp) => resp.json())
   .then(data=>{
-    let visitList="";
+    let visitList="";    
     data.forEach(function(visit){
       visitList=visitList+visit["date"]+" "+ visit["patient"]["last_name"]+ visit["patient"]["first_name"]+"  <a href=`#`>Edit</a><br /> ";
     });
-    $(".visits").html(visitList);
-    $( ".visits" ).append(`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(${dataId})">Add New Visit </a>` );
-  });
-  debugger
+    debugger
+    document.getElementById("visits").innerHTML=visitList + `<a href="#" class="add_visit" id=${dataId} onClick="postVisit(${dataId})">Add New Visit </a>`;
+    //visits.innerHtml=visitList +`<a href="#" class="add_visit" id=${dataId} onClick="postVisit(${dataId})">Add New Visit </a>`;
+  }).then(console.log('got to data')).catch(error=>console.log('Error:', error));
+  
   $.get("/nurses/"+dataId+".json", function(data) {
-    $(".nurseNameVisits").html("<h3>"+data.first_name+" "+data.last_name+"'s Visits: </h3>")
+    $("#nurseNameVisits").html("<h3>"+data.first_name+" "+data.last_name+"'s Visits: </h3>")
     });
 }
 
