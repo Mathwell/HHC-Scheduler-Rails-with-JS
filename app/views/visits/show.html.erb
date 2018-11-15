@@ -6,10 +6,10 @@
 <div class="center">
 
   <div class="info">
-    <p><strong>Patient:</strong> <div class="visitPatient"><%= @visit.patient.name %> </div> </p>
+    <p><strong>Patient:</strong> <span class="visitPatient"><%= @visit.patient.name %> </span> </p>
 
-    <p><strong>Nurse:</strong> <div class="nurseName"> <%= @visit.nurse.name %> </div></p>
-    <p><strong>Date:</strong> <div class="visitDate">  <%= @visit.date %> </div></p>
+    <p><strong>Nurse:</strong> <span class="nurseName"> <%= @visit.nurse.name %> </span></p>
+    <p><strong>Date:</strong> <span class="visitDate">  <%= @visit.date %> </span></p>
 
     <% if current_user.admin %>
       <p> <%= link_to 'Edit Visit', [:edit, @visit] %> </p>

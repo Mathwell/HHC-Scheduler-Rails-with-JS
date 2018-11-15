@@ -8,19 +8,18 @@
     <p><strong >Total Number of Visits:</strong> <span id="nurseVisits"> <%= @nurse.visits.count %> </span></p>
     <p><strong >Total Number of Patients:</strong> <span id="nursePatients"><%= @nurse.patients.count %> </span></p>
     <p><strong>Role:</strong> <span id="role"><%= @nurse.role %></span></p>
-    <% if current_user.admin %>
-      <%= link_to 'Edit Nurse', [:edit, @nurse] %></p>
-      <a href="#1" class="js-back" data-id="<%=@nurse.id %>">Back...</a>
-      <a href="#" class="js-next" data-id="<%=@nurse.id %>">Next...</a>
-      <br>
-    <% else %>
+    <% if current_user.admin %>      
+      <p><a id="edit_nurse" href="/nurses/<%=@nurse.id%>/edit">Edit</a> </p>
+      <a href="#1" id="js-back" data-id="<%=@nurse.id %>">Back...</a>
+      <a href="#" id="js-next" data-id="<%=@nurse.id %>">Next...</a>
+      <br>  
 
     <% end %>
-    <%= link_to 'Back', nurses_path,class: "btn btn-primary btn-light" %></p>
+    <%= link_to 'Back', nurses_path,class: "btn btn-primary btn-light" %>
   </div>
 </div>
 
 <h1><span id="nurseNameVisits"><%=@nurse.name%>'s Visits</span></h1>
 
-<button class="nurses_visit" id="<%=@nurse.id%>">Show Visits</button>
+<button id="nurses_visit" class="nurses_visit" data-id="<%=@nurse.id%>">Show Visits</button>
 <div id="visits"></div>

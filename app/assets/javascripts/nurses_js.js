@@ -4,16 +4,18 @@ function addEventListeners(){
   Array.from(visit_buttons).forEach(function(element) {
     element.addEventListener('click',function(event){showVisits(event)});
   });   
-  const next_link=document.getElementsByClassName("js-next")
-  Array.from(next_link).forEach(function(element){
-    element.addEventListener('click',function(event){showNext(event)});
-});
+  const next_link=document.getElementById("js-next")
+  //Array.from(next_link).forEach(function(element){
+    next_link.addEventListener('click',function(event){showNext(event)});
+//});
 }
 
 //renders visit index page via JS and Active Model Serialization JSON backend
 function showVisits(event){  
   event.preventDefault();  
-  var dataId=event.target.id
+  
+    var dataId=event.target.attributes["data-id"].value
+  
   
   //visit list
   fetch("/nurses/"+dataId+"/visits.json",{
@@ -23,6 +25,7 @@ function showVisits(event){
   })
   .then((resp) => resp.json())
   .then(data=>{
+    //newVisitList(data, dataId)
     document.getElementById("visits").innerHTML=visitList(data,dataId)    
   }).catch(error=>console.log('Error:', error));
   
@@ -48,6 +51,33 @@ function visitList(visits,nurseId){
     return visitList
 }
 
+
+
+function newVisitList(data, dataId){
+  data.forEach(function(element){
+    const visit=new Visit(dataId,element["patient"], element["date"])
+    const visitHtml =visit.formatHtml()
+    $('#visits').append(visitHtml)
+  })
+}
+
+
+class Visit {
+
+  constructor(nurse,patient,date){
+    this.nurse=nurse;
+    this.patient=patient;
+    this.date=date
+  
+  }
+}
+
+Visit.prototype.formatHtml=function(){
+  return `<li>${this.date} ${this.patient.last_name} ${this.patient.first_name}</li>`
+}
+
+
+
 //posting new visit via Java Script
   function postVisit(id) {
       const url = "/nurses/"+id+"/visits/new.html";
@@ -57,8 +87,9 @@ function visitList(visits,nurseId){
 
 //rendering show page: next and back navigation
 function showNext(event){
-  event.preventDefault();
-  var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+  event.preventDefault();  
+  var nextId = parseInt(document.getElementById("js-next").getAttribute("data-id")) + 1;
+
   fetch("/nurses/" + nextId + ".json",{
     headers: new Headers({
       'Content-Type': 'application/json'
@@ -72,9 +103,10 @@ function showNext(event){
     document.getElementById("role").innerHTML=data["role"]
     document.getElementById("nurseNameVisits").innerHTML=data["first_name"]+" "+data["last_name"]+"'s Visits:"
     document.getElementById("visits").innerHTML=""
-    $(".nurses_visit").attr("id",data["id"]);    
-    $(".js-next").attr("data-id", data["id"]);
-    $(".js-back").attr("data-id", data["id"]);
+    document.getElementById("nurses_visit").setAttribute("data-id", data["id"])      
+    document.getElementById("js-next").setAttribute("data-id", data["id"])      
+    document.getElementById("js-back").setAttribute("data-id", data["id"])
+    document.getElementById("edit_nurse").setAttribute("href","/nurses/"+data["id"]+"/edit")          
   });  
 }
 
@@ -97,19 +129,20 @@ function showNext(event){
 //})
 
 $(document).ready(function () {
-  $(".js-back").on("click", function(event) {
+  $("#js-back").on("click", function(event) {
     event.preventDefault();
-    var backId = parseInt($(".js-back").attr("data-id"))-1;
+    var backId = parseInt($("#js-back").attr("data-id"))-1;
     $.get("/nurses/" + backId + ".json", function(data) {
       $("#nurseName").text(data["last_name"]+ " "+data["first_name"]);
       $("#nurseVisits").text(data["visits"].length);
       $("#nursePatients").text(data["patients"].length);
       $('#role').text(data["role"])
+      $("#edit_nurse").attr("href","/nurses/"+data["id"]+"/edit") 
       $("#nurseNameVisits").html(data["first_name"]+" "+data["last_name"]+"'s Visits:")
-      $(".nurses_visit").attr("id",data["id"]);
+      $("#nurses_visit").attr("data-id",data["id"]);
       $("#visits").text("");
-      $(".js-next").attr("data-id", data["id"]);
-      $(".js-back").attr("data-id", data["id"]);
+      $("#js-next").attr("data-id", data["id"]);
+      $("#js-back").attr("data-id", data["id"]);
     });
   });
 });
