@@ -4,10 +4,10 @@
 <div class="center">
 
   <div class="info">
-    <p><strong>Name:</strong> <span class="nurseName"> <%= @nurse.name %> </span> </p>
-    <p><strong >Total Number of Visits:</strong> <span class="nurseVisits"> <%= @nurse.visits.count %> </span></p>
-    <p><strong >Total Number of Patients:</strong> <span class="nursePatients"><%= @nurse.patients.count %> </span></p>
-    <p><strong>Role:</strong> <%= @nurse.role %></p>
+    <p><strong>Name:</strong> <span id="nurseName"> <%= @nurse.name %> </span> </p>
+    <p><strong >Total Number of Visits:</strong> <span id="nurseVisits"> <%= @nurse.visits.count %> </span></p>
+    <p><strong >Total Number of Patients:</strong> <span id="nursePatients"><%= @nurse.patients.count %> </span></p>
+    <p><strong>Role:</strong> <span id="role"><%= @nurse.role %></span></p>
     <% if current_user.admin %>
       <%= link_to 'Edit Nurse', [:edit, @nurse] %></p>
       <a href="#1" class="js-back" data-id="<%=@nurse.id %>">Back...</a>
@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<h1><span class="nurseNameVisits"><%=@nurse.name%>'s Visits</span></h1>
+<h1><span id="nurseNameVisits"><%=@nurse.name%>'s Visits</span></h1>
 
 <button class="nurses_visit" id="<%=@nurse.id%>">Show Visits</button>
-<div class="visits"></div>
+<div id="visits"></div>
