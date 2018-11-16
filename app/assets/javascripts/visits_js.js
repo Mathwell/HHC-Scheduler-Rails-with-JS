@@ -34,12 +34,12 @@ $(document).ready(function () {
    $('.new_visit').submit(function(event) {
       //prevent form from submitting the default way
       event.preventDefault();
-      var values = $(this).serialize();
-      debugger      
+      var values = $(this).serialize();      
       var posting = $.post('/visits', values);
       posting.done(function(data) {
         window.location="/visits";
       });
     });
-
   })
+
+  

@@ -12,7 +12,9 @@
 //
 //= require rails-ujs
 //= require jquery
-//= require hide
 //= require nurses_js
 //= require visits_js
+//= require Visit
 //= require_tree 
+//= require_self
+

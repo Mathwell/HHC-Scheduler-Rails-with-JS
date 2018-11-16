@@ -25,8 +25,9 @@ function showVisits(event){
   })
   .then((resp) => resp.json())
   .then(data=>{
-    //newVisitList(data, dataId)
-    document.getElementById("visits").innerHTML=visitList(data,dataId)    
+    
+    newVisitList(data, dataId)
+    //document.getElementById("visits").innerHTML=visitList(data,dataId)    
   }).catch(error=>console.log('Error:', error));
   
   //nurse info
@@ -54,27 +55,16 @@ function visitList(visits,nurseId){
 
 
 function newVisitList(data, dataId){
+  let visitList='';
   data.forEach(function(element){
-    const visit=new Visit(dataId,element["patient"], element["date"])
-    const visitHtml =visit.formatHtml()
-    $('#visits').append(visitHtml)
+    const visit=new Visit(element);    
+    const visitHtml =visit.formatHtml();
+    visitList+=visitHtml
   })
+  document.getElementById("visits").innerHTML=visitList
 }
 
 
-class Visit {
-
-  constructor(nurse,patient,date){
-    this.nurse=nurse;
-    this.patient=patient;
-    this.date=date
-  
-  }
-}
-
-Visit.prototype.formatHtml=function(){
-  return `<li>${this.date} ${this.patient.last_name} ${this.patient.first_name}</li>`
-}
 
 
 
