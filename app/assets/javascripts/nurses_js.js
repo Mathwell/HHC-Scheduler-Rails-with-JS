@@ -54,13 +54,14 @@ function visitList(visits,nurseId){
 
 
 
-function newVisitList(data, dataId){
+function newVisitList(data, nurseId){
   let visitList='';
   data.forEach(function(element){
     const visit=new Visit(element);    
     const visitHtml =visit.formatHtml();
     visitList+=visitHtml
   })
+  visitList+=`<a href="#" class="add_visit" id=${nurseId} onClick="postVisit(${nurseId})">Add New Visit </a>`
   document.getElementById("visits").innerHTML=visitList
 }
 
