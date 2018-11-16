@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
   $(".js-next-visit").on("click", function(event) {
-    event.preventDefault();    
+    event.preventDefault();
     var nextId = parseInt($(".js-next-visit").attr("data-id")) + 1;
     $.get("/visits/" + nextId + ".json", function(data) {
       $(".nurseName").text(data["nurse"]["last_name"]+ " "+data["nurse"]["first_name"]);
@@ -34,7 +34,8 @@ $(document).ready(function () {
    $('.new_visit').submit(function(event) {
       //prevent form from submitting the default way
       event.preventDefault();
-      var values = $(this).serialize();       
+      debugger
+      var values = $(this).serialize();
       var posting = $.post('/visits', values);
       posting.done(function(data) {
         window.location="/visits";
