@@ -11,18 +11,19 @@ DATA = {
   :nurse_keys =>
    ["first_name", "last_name", "role"],
   :nurses => [
-    ["Martha","Njoki","nurse"],
-    ["Ahn","Nguyen", "nurse"],
-    ["Brioso", "Lusia", "HHA"],
+    ["Martha","Nokia","nurse"],
+    ["Ahn","Ngo", "nurse"],
+    ["Brioso", "Lusa", "HHA"],
+    ["Kathryn", "Barnshrein", "nurse"],
   ],
 
   :patient_keys =>
    ["first_name", "last_name", "nurse_id"],
   :patients => [
-    ["Noel","Alcantara",1],
-    ["Maria","Garcia", 2],
-    ["Ponny", "Ly", 1],
-
+    ["Nola","Altara",1],
+    ["Maria","Gordivia", 2],
+    ["Ponny", "Long", 1],
+    ["Ba", "La", 1],
   ],
 
 
