@@ -35,7 +35,7 @@ $(document).ready(function () {
       //prevent form from submitting the default way
       event.preventDefault();
       event.stopPropagation();
-      $(this).attr("disabled", "disabled");
+      //$(this).attr("disabled", "disabled");
       var values = $(this).serialize();       
       var posting = $.post('/visits', values);
       posting.done(function(data) {
