@@ -13,8 +13,8 @@
 
   <tbody>
     <tr>
-      <td><strong>First Name</strong></td>
-      <td><strong>Last Name</strong></td>
+      <td><strong>Nurse Name</strong></td>
+      
       <td><strong>Role</strong></td>
       <td><strong>Patients</strong></td>
       <td><strong>Visits</strong></td>
@@ -28,7 +28,7 @@
       <tr>
 
         <td><%= link_to "#{nurse.name}", nurse_path(nurse.id) %></td>
-        <td><%= nurse.last_name %></td>
+        
         <td><%= nurse.role %></td>
         <td><%= link_to "#{nurse.patients.count}", nurse_patients_path(nurse.id) %></td>
         <td><%= link_to "#{nurse.visits.count}", nurse_visits_path(nurse.id) %></td>
