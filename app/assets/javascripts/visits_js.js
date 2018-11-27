@@ -1,7 +1,7 @@
 function addViewEventListeners(){
   //debugger
-  //const add_new=document.getElementById(".new_visit")
-  //add_new.addEventListener('submit',function(event){addNewVisit(event)});
+  const add_new=document.getElementById("new_visit")
+  add_new.addEventListener('submit',function(event){postNewVisit(event)});
 }
 
 
@@ -36,19 +36,31 @@ $(document).ready(function () {
   });
 });
 
-$(document).ready(function () {
-  $('.new_visit').submit(function(event) {
+//$(document).ready(function () {
+//  $('.new_visit').submit(function(event) {
       //prevent form from submitting the default way
-      event.preventDefault();
+//      event.preventDefault();
       //event.stopPropagation();     
-      var values = $(this).serialize();       
-      var posting = $.post('/visits', values);
-      posting.done(function(data) {
-        window.location="/visits/"+data.id;
-        console.log(data)
-      });
-    })
-  })
+//      var values = $(this).serialize();       
+//      var posting = $.post('/visits', values);
+//      posting.done(function(data) {
+//        window.location="/visits/"+data.id;        
+//      });
+//    })
+//  })
   
+function postNewVisit(event)
+{
+  //prevent form from submitting the default way
+  event.preventDefault();
+  //event.stopPropagation();     
+  //debugger
+  var values = $(event.target).serialize();       
+  var posting = $.post('/visits', values);
+  posting.done(function(data) {
+    window.location="/visits/"+data.id;
+
+  });
+}
 
   addViewEventListeners();

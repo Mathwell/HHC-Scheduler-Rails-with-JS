@@ -44,7 +44,7 @@ class VisitsController < ApplicationController
         @patient.nurse_id=@visit.nurse_id
         @patient.save        
         #format.html { redirect_to @visit, notice: 'New visit was successfully created.' }
-        format.json { render json: @visit}
+        format.json { render json: @visit, notice: "success"}
       else       
         format.html { render :new }
       end

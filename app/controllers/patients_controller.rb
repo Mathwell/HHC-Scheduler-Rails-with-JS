@@ -83,7 +83,7 @@ class PatientsController < ApplicationController
     #raise params.inspect
     if !params[:nurse_id].blank?
       @nurse=Nurse.find(params[:nurse_id])
-      @patients=Patient.where(nurse_id: params[:nurse_id]).uniq
+      @patients=@nurse.patients.uniq
       #@patients=@nurse.patients
       #raise @nurse.inspect
     else

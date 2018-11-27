@@ -30,7 +30,7 @@
         <td><%= link_to "#{nurse.name}", nurse_path(nurse.id) %></td>
         
         <td><%= nurse.role %></td>
-        <td><%= link_to "#{nurse.patients.count}", nurse_patients_path(nurse.id) %></td>
+        <td><%= link_to "#{nurse.patients.uniq.count}", nurse_patients_path(nurse.id) %></td>
         <td><%= link_to "#{nurse.visits.count}", nurse_visits_path(nurse.id) %></td>
         <% if current_user.admin %>
           <td><%= link_to "Edit #{nurse.name}", [:edit, nurse] %></td>
