@@ -1,3 +1,9 @@
+function addViewEventListeners(){
+  //debugger
+  //const add_new=document.getElementById(".new_visit")
+  //add_new.addEventListener('submit',function(event){addNewVisit(event)});
+}
+
 
 $(document).ready(function () {
   $(".js-next-visit").on("click", function(event) {
@@ -31,17 +37,19 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-   $('.new_visit').submit(function(event) {
+  $('.new_visit').submit(function(event) {
       //prevent form from submitting the default way
       event.preventDefault();
       event.stopPropagation();
+      debugger
       //$(this).attr("disabled", "disabled");
       var values = $(this).serialize();       
       var posting = $.post('/visits', values);
       posting.done(function(data) {
         window.location="/visits";
       });
-    });
+    })
   })
-
   
+
+  addViewEventListeners();
