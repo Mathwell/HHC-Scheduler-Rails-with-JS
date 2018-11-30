@@ -44,7 +44,7 @@
         <% end %>
         <td> <%= link_to 'More', nurse,class: "btn btn-primary btn-light" %></p> </td>
         <td> <button class="nurses_visit" data-id="<%=nurse.id%>">Show Visits</button></td>
-        <td> <button class="nurses_visit" data-id="<%=nurse.id%>">Show Patients</button></td>
+        <td> <%= button_to "Show Patients",nurse_patients_path(nurse.id), :method => :get %></td>
       </tr>
     <% end %>
   </tbody>

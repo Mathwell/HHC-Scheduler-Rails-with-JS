@@ -17,18 +17,19 @@ function showVisits(event){
     var dataId=event.target.attributes["data-id"].value
   
   
-  //visit list
-  fetch("/nurses/"+dataId+"/visits.json",{
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    })
-  })
-  .then((resp) => resp.json())
-  .then(data=>{
+//   //visit list
+//  // fetch("/nurses/"+dataId+"/visits",{
+//  //   headers: new Headers({
+//  //     'Content-Type': 'application/json',
+//  //      'Accept': 'application/json'   
+//  //   })
+//  // })
+//   .then((resp) => resp.json())
+//   .then(data=>{
     
-    newVisitList(data, dataId)
-    //document.getElementById("visits").innerHTML=visitList(data,dataId)    
-  }).catch(error=>console.log('Error:', error));
+//     newVisitList(data, dataId)
+//     //document.getElementById("visits").innerHTML=visitList(data,dataId)    
+//   }).catch(error=>console.log('Error:', error));
   
   //nurse info
   fetch("/nurses/"+dataId+".json",{
@@ -38,6 +39,27 @@ function showVisits(event){
   })
     .then((resp) => resp.json())
     .then(data=>{
+      //debugger
+      const sortedData=data.visits.slice().sort(function(a, b) {
+        var nameA = a.patient_name.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.patient_name.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        if (a.date > b.date) {
+          return -1;
+        }
+        if (a.date < b.date) {
+          return 1;
+        }
+      
+        // names must be equal
+        return 0;
+      });
+      newVisitList(sortedData, dataId)
       document.getElementById("nurseNameVisits").innerHTML="<h3>"+data.first_name+" "+data.last_name+"'s Visits: </h3>"      
     }).catch(error=>console.log('Error:', error));    
 }
