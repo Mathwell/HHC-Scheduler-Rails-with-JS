@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2018_08_19_184535) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "aids", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -44,12 +47,12 @@ ActiveRecord::Schema.define(version: 2018_08_19_184535) do
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "uid", limit: 8
+    t.bigint "uid"
   end
 
   create_table "visits", force: :cascade do |t|
-    t.integer "patient_id"
-    t.integer "nurse_id"
+    t.bigint "patient_id"
+    t.bigint "nurse_id"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -57,4 +60,6 @@ ActiveRecord::Schema.define(version: 2018_08_19_184535) do
     t.index ["patient_id"], name: "index_visits_on_patient_id"
   end
 
+  add_foreign_key "visits", "nurses"
+  add_foreign_key "visits", "patients"
 end
